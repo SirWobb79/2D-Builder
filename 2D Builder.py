@@ -11,9 +11,13 @@ y = 2
 broke = " "
 placed = " "
 length = 14
-depth = 8
 
 world = [[" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
+         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
+         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
+         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
+         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
+         [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
          [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
          [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
          [" "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ",],
@@ -52,6 +56,10 @@ while True:
         if world[y-1][x] == " " and world[y+1][x] != " ":
             world[y][x] = " "
             y -= 2
+    elif action == "W":
+        if world[y-1][x] == " " and world[y+1][x] != " ":
+            world[y][x] = " "
+            y -= 3
     elif action == "i":
         for i in range(len(inv)+1):
             print(f"{inv[0][i]}: {inv[1][i]}")
@@ -109,18 +117,14 @@ while True:
             world[y+1][x] = tiles[place-1]
         elif location == "8":
             world[y+1][x+1] = tiles[place-1]
-            
-        if place == 3:
-            inv[1][2] -= 1
-        elif place == 1:
-            inv[1][0] -= 1
-        elif place == 2:
-            inv[1][1] -= 1
+        
+        inv[1][place-1] -= 1
+        
     elif action == "?":
-        print("Use A and D to move, W to jump, B to break, and P to place")
+        print("Use A and D to move, W to jump (capital to jump higher), B to break, and P to place")
         input("Press ENTER to continue")
             
-    if x == length:
+    if x == len(world[0])-2:
         x -= 1
     elif x == 1:
         x += 1
@@ -129,7 +133,7 @@ while True:
         world[y][x] = " "
         y += 1
     
-    if y > depth:
+    if y > len(world)-3:
         y -= 1
     elif y == 1:
         y += 1
